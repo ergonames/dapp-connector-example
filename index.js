@@ -96,8 +96,6 @@ sendTransactionButton.addEventListener('click', async (e) => {
             wasm.Contract.pay_to_address(wasm.Address.from_base58(reciverWalletAddress)),
             creationHeight);
 
-        // outBoxBuilder.mint_token(token, "SRTM", "Sigma Rust Test Mint 1", 2);
-
         try {
             outputCandidates.add(outBoxBuilder.build());
         } catch (e) {
@@ -118,12 +116,12 @@ sendTransactionButton.addEventListener('click', async (e) => {
 
         console.log(txBuilder.build().to_json());
 
-        const tx = parseJson(txBuilder.build().to_json());
+        const tx = parseTransactionData(txBuilder.build().to_json());
 
         console.log(`tx: ${JSONBigInt.stringify(tx)}`);
         console.log(`original id: ${tx.id}`);
 
-        const correctTx = parseJson(wasm.UnsignedTransaction.from_json(JSONBigInt.stringify(tx)).to_json());
+        const correctTx = parseTransactionData(wasm.UnsignedTransaction.from_json(JSONBigInt.stringify(tx)).to_json());
         console.log(`correct tx: ${JSONBigInt.stringify(correctTx)}`);
         console.log(`new id: ${correctTx.id}`);
         
@@ -180,6 +178,8 @@ sendTransactionButton.addEventListener('click', async (e) => {
             console.log('[txId]', txId);
             if (txId) {
                 transactionIdText.innerHTML = txId;
+                let url = "https://explorer.ergoplatform.com/en/transactions/" + txId;
+                transactionIdText.href = url;
             }
         });
     })
@@ -203,17 +203,17 @@ function updateBalances() {
     });
 }
 
-function parseJson(str) {
+function parseTransactionData(str) {
     let json = JSONBigInt.parse(str);
     return {
         id: json.id,
         inputs: json.inputs,
         dataInputs: json.dataInputs,
-        outputs: json.outputs.map(output => parseUtxo(output)),
+        outputs: json.outputs.map(output => parseUTXO(output)),
     }
 }
 
-function parseUtxo(json) {
+function parseUTXO(json) {
     var newJson = { ...json };
     if (newJson.assets === null) {
         newJson.assets = [];
@@ -231,26 +231,4 @@ function parseUtxo(json) {
         transactionId: newJson.transactionId,
         index: newJson.index
     };
-}
-
-function parseJsonEx(str) {
-    let json = JSONBigInt.parse(str);
-    return {
-        id: json.id,
-        inputs: json.inputs,
-        dataInputs: json.dataInputs,
-        outputs: json.outputs.map(output => ({
-          boxId: output.boxId,
-          value: output.value.toString(),
-          ergoTree: output.ergoTree,
-          assets: output.assets.map(asset => ({
-            tokenId: asset.tokenId,
-            amount: asset.amount.toString(),
-          })),
-          additionalRegisters: output.additionalRegisters,
-          creationHeight: output.creationHeight,
-          transactionId: output.transactionId,
-          index: output.index
-        })),
-      };
 }
