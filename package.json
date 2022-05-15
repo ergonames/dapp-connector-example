@@ -1,0 +1,25 @@
+{
+  "name": "dapp-connector",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server",
+    "build": "webpack --config webpack.config.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^5.72.1",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.9.0"
+  },
+  "dependencies": {
+    "assert": "^2.0.0",
+    "buffer": "^6.0.3",
+    "ergo-lib-wasm-browser": "^0.16.1",
+    "json-bigint": "^1.0.0",
+    "node-fetch": "^3.2.4"
+  }
+}

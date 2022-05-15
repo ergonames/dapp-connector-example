@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Dapp Connector Test</title>
+        <link rel="icon" type="image/x-icon" href="favicon.ico">
+    </head>
+    <body>
+        <h1>Dapp Connector Test</h1>
+        <br>
+        <div>
+            <h3>Wallet Details</h3>
+            <p>Address: <span id="address">None</span></p>
+            <p>Balance (ERG): <span id="balance-erg">None</span></p>
+        </div>
+        <br>
+        <div>
+            <h3>Transaction Details</h3>
+            <input style="width: 450px;" id="address-input" placeholder="Enter address to send too...">
+            <button id="set-send-address">Set Reciever Address</button>
+            <p>Address: <span id="send-address">None</span></p>
+            <p>Balance (ERG): <span id="send-balance-erg">None</span></p>
+            <p>Block Height: <span id="block-height">None</span></p>
+            <p>Transaction Id: <span id="transaction-id">None</span></p>
+        </div>
+        <br>
+        <div>
+            <button id="connect">Connect Wallet</button>
+            <button id="send">Send Transaction</button>
+        </div>
+    </body>
+    <script src="./startup.js"></script>
+</html>
